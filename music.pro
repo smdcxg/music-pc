@@ -28,7 +28,7 @@ SOURCES += \
         main.cpp \
         widget.cpp \
         ./shared/websockettransport.cpp \
-        ../shared/websocketclientwrapper.cpp
+        ./shared/websocketclientwrapper.cpp
 
 HEADERS += \
         widget.h \
@@ -38,3 +38,4 @@ HEADERS += \
 
 FORMS += \
         widget.ui
+

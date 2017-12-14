@@ -6,12 +6,19 @@ Widget::Widget(QWidget *parent) :
     ui(new Ui::Widget)
 {
     ui->setupUi(this);
-
+    view = new QWebEngineView(this);
+    view->setUrl(QUrl("http://47.104.14.238/webmusic1/server.php"));
+    view->show();
 }
 
 Widget::~Widget()
 {
     delete ui;
+}
+
+void Widget::resizeEvent(QResizeEvent *)
+{
+    view->resize(this->size());
 }
 
 void Widget::sendText(const QString &text)

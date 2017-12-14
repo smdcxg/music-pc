@@ -1,7 +1,7 @@
 #include "widget.h"
 #include "core.h"
-#include "../shared/websocketclientwrapper.h"
-#include "../shared/websockettransport.h"
+#include "./shared/websocketclientwrapper.h"
+#include "./shared/websockettransport.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])
@@ -28,11 +28,11 @@ int main(int argc, char *argv[])
     Core core(&w);
     channel.registerObject(QStringLiteral("core"), &core);
 
-    //QWebEngineView *view = new QWebEngineView(this);
-    QWebEngineView view(&w);
-    view.setUrl(QUrl("http://127.0.0.1/test/index.html"));
+    /*QWebEngineView *view = new QWebEngineView(this);
+    //QWebEngineView view(&w);
+    view.setUrl(QUrl("http://47.104.14.238/webmusic1/server.php"));
     //view.setUrl(QUrl("http://127.0.0.1/music/server.php"));
-    view.show();
+    view.show();*/
 
     return a.exec();
 }

@@ -21,6 +21,10 @@ public:
     explicit Widget(QWidget *parent = 0);
     ~Widget();
     void receiveText(const QString &text);
+
+protected:
+    void resizeEvent(QResizeEvent *);
+
 signals:
 
 
@@ -29,6 +33,7 @@ public slots:
 
 private:
     Ui::Widget *ui;
+    QWebEngineView *view;
 
 };
 
