@@ -84,6 +84,10 @@ public slots:
     {
         m_widget->receiveText(text);
     }
+    void receiveSize(const qint8 offsetX, const qint8 offsetY)
+    {
+        m_widget->receiveSize(offsetX, offsetY);
+    }
 private:
     Widget *m_widget;
 };
