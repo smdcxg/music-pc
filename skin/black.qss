@@ -1,0 +1,48 @@
+/* ===title=== */
+#title {
+    background-color: #333333;
+}
+
+/* ===logo=== */
+#logo {
+    font: 20pt "Segoe Print";
+    color: #d9d9d9;
+}
+
+/* ===close=== */
+#close {
+    background: url(:/icon/icon/close.png) no-repeat center center;
+    border: none;
+}
+#close:hover {
+    background: url(:/icon/icon/close-hover.png) no-repeat center center;
+}
+#maximized {
+    background: url(:/icon/icon/max.png) no-repeat center center;
+    border: none;
+}
+#maximized:hover {
+    background: url(:/icon/icon/max-hover.png) no-repeat center center;
+}
+#minimized {
+    background: url(:/icon/icon/min.png) no-repeat center center;
+    border: none;
+}
+#minimized:hover {
+    background: url(:/icon/icon/min-hover.png) no-repeat center center;
+}
+/* ===search=== */
+#searchEdit {
+    font-size: .5rem;
+    font-family: "微软雅黑";
+    color: #ffffff;
+    background-color: rgba(95, 95, 95, 133);
+    border: 1px solid rgba(95, 95, 95, 133);
+    border-radius: 12px;
+}
+#searchEdit:focus {
+    border-color: rgba(200, 200, 200, 127.5);
+}
+#searchPrompt {
+    image: url(:/icon/icon/Prompt.png);
+}

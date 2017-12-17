@@ -66,7 +66,7 @@ public:
     Core(Widget *widget, QObject *parent = nullptr)
         : QObject(parent), m_widget(widget)
     {
-        //connect(objcet, SIGNAL(sendText(const QString &text)), this, SIGNAL(sendText(const QString &text)));
+        connect(widget, &Widget::sendText, this, &Core::sendText);
     }
 
 signals:
@@ -83,10 +83,6 @@ public slots:
     void receiveText(const QString &text)
     {
         m_widget->receiveText(text);
-    }
-    void receiveSize(const qint8 offsetX, const qint8 offsetY)
-    {
-        m_widget->receiveSize(offsetX, offsetY);
     }
 private:
     Widget *m_widget;

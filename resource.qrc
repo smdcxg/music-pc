@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/qss">
+        <file>skin/black.qss</file>
+    </qresource>
+    <qresource prefix="/icon">
+        <file>icon/close-hover.png</file>
+        <file>icon/min-hover.png</file>
+        <file>icon/close.png</file>
+        <file>icon/min.png</file>
+        <file>icon/max.png</file>
+        <file>icon/max-hover.png</file>
+        <file>icon/search.png</file>
+        <file>icon/Prompt.png</file>
+    </qresource>
+</RCC>

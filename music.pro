@@ -12,6 +12,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = music
 TEMPLATE = app
 
+
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
 # depend on your compiler). Please consult the documentation of the
@@ -28,14 +29,21 @@ SOURCES += \
         main.cpp \
         widget.cpp \
         ./shared/websockettransport.cpp \
-        ./shared/websocketclientwrapper.cpp
+        ./shared/websocketclientwrapper.cpp \
+    appsearchline.cpp
 
 HEADERS += \
         widget.h \
         core.h \
         ./shared/websockettransport.h \
-        ./shared/websocketclientwrapper.h
+        ./shared/websocketclientwrapper.h \
+    appsearchline.h
 
 FORMS += \
         widget.ui
+
+RESOURCES += \
+        resource.qrc
+
+
 
