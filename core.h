@@ -84,6 +84,10 @@ public slots:
     {
         m_widget->receiveText(text);
     }
+    void receiveCmd(const QString &cmdText)
+    {
+        m_widget->receiveCmd(cmdText);
+    }
 private:
     Widget *m_widget;
 };

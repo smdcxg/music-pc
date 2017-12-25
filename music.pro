@@ -29,15 +29,13 @@ SOURCES += \
         main.cpp \
         widget.cpp \
         ./shared/websockettransport.cpp \
-        ./shared/websocketclientwrapper.cpp \
-    appsearchline.cpp
+        ./shared/websocketclientwrapper.cpp
 
 HEADERS += \
         widget.h \
         core.h \
         ./shared/websockettransport.h \
-        ./shared/websocketclientwrapper.h \
-    appsearchline.h
+        ./shared/websocketclientwrapper.h
 
 FORMS += \
         widget.ui
@@ -45,5 +43,4 @@ FORMS += \
 RESOURCES += \
         resource.qrc
 
-
-
+WEBENGINE_CONFIG+=proprietary_codecs

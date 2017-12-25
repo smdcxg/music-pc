@@ -16,12 +16,12 @@ Widget::~Widget()
 
 void Widget::resizeEvent(QResizeEvent *)
 {
-    view->setGeometry(this->rect().x() + 25, this->rect().y() + 50 + 25, this->size().width() - 50, this->size().height() - 50 - 25 - 25);
+    view->setGeometry(this->rect().x() + 25, this->rect().y() + 25, this->size().width() - 50, this->size().height() - 25 - 25);
 }
 
 void Widget::paintEvent(QPaintEvent *event)
 {
-    QPainterPath path;
+    /*QPainterPath path;
     path.setFillRule(Qt::WindingFill);
     path.addRect(25, 25, this->width()-50, this->height()-50);
     QPainter painter(this);
@@ -39,36 +39,33 @@ void Widget::paintEvent(QPaintEvent *event)
         color.setAlpha(150 - qSqrt(i)*40);
         painter.setPen(color);
         painter.drawPath(path);
-    }
+    }*/
 }
 
-//重写鼠标按下事件
-void Widget::mousePressEvent(QMouseEvent *event)
+void Widget::labelMousePressEvent(QMouseEvent *event)
 {
     mMoveing = true;
-    //记录下鼠标相对于窗口的位置
-    //event->globalPos()鼠标按下时，鼠标相对于整个屏幕位置
-    //pos() this->pos()鼠标按下时，窗口相对于整个屏幕位置
     mMovePosition = event->globalPos() - pos();
-    return QWidget::mousePressEvent(event);
+    return QWidget::mouseMoveEvent(event);
 }
 
 //重写鼠标移动事件
-void Widget::mouseMoveEvent(QMouseEvent *event)
+void Widget::labelMouseMoveEvent(QMouseEvent *event)
 {
     //(event->buttons() && Qt::LeftButton)按下是左键
     //鼠标移动事件需要移动窗口，窗口移动到哪里呢？就是要获取鼠标移动中，窗口在整个屏幕的坐标，然后move到这个坐标，怎么获取坐标？
     //通过事件event->globalPos()知道鼠标坐标，鼠标坐标减去鼠标相对于窗口位置，就是窗口在整个屏幕的坐标
-    if (mMoveing && (event->buttons() && Qt::LeftButton)
-        && (event->globalPos()-mMovePosition).manhattanLength() > QApplication::startDragDistance())
+    qDebug() << event->globalPos();
+    if (mMoveing && (event->globalPos()-mMovePosition).manhattanLength() > QApplication::startDragDistance())
     {
         move(event->globalPos()-mMovePosition);
         mMovePosition = event->globalPos() - pos();
     }
     return QWidget::mouseMoveEvent(event);
 }
-void Widget::mouseReleaseEvent(QMouseEvent *event)
+void Widget::labelMouseReleaseEvent(QMouseEvent *event)
 {
+    qDebug() << 0;
     mMoveing = false;
 }
 
@@ -80,10 +77,11 @@ void Widget::initialization(){
     QString stylesheet = filetext.readAll();
     this->setStyleSheet(stylesheet);
     file.close();
-
+    setMouseTracking(true);
+    mMoveing = false;
     //this->setWindowFlags(Qt::FramelessWindowHint);//去掉标题栏
-    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowMinimizeButtonHint |Qt::WindowStaysOnTopHint);
-    this->setAttribute(Qt::WA_TranslucentBackground, true);    //设置窗体透明
+    //setWindowFlags(Qt::FramelessWindowHint | Qt::WindowMinimizeButtonHint |Qt::WindowStaysOnTopHint);
+    //this->setAttribute(Qt::WA_TranslucentBackground, true);    //设置窗体透明
 
     view = new QWebEngineView(this);
     view->page()->profile()->clearHttpCache(); // 清理缓存
@@ -95,13 +93,26 @@ void Widget::initialization(){
     //view->setUrl(QUrl("http://47.104.14.238/webmusic/server.php"));
     view->setUrl(QUrl("http://127.0.0.1/webmusic/server.php"));
     //view->setUrl(QUrl("http://music.163.com/outchain/player?type=2&id=516392300&auto=1&height=66&bg=e8e8e8"));
+    //view->setUrl(QUrl("http://html5test.com/"));
     view->show();
-    connect(ui->searchEdit, SIGNAL(textChanged(const QString &)), this, SLOT(changeSearch(const QString &)));
 }
 
 void Widget::receiveText(const QString &text)
 {
     qDebug() << "rw:" << text;
+}
+void Widget::receiveCmd(const QString &cmdText)
+{
+    qDebug() << "cmd:" << cmdText;
+    if(cmdText == "dragStart"){
+        titleDragStart();
+        //emit label->mousePressEvent();
+        //mMoveing = true;
+        //记录下鼠标相对于窗口的位置
+        //event->globalPos()鼠标按下时，鼠标相对于整个屏幕位置
+        //pos() this->pos()鼠标按下时，窗口相对于整个屏幕位置
+        //mMovePosition = pos();
+    }
 }
 
 void Widget::on_close_clicked()
@@ -111,13 +122,26 @@ void Widget::on_close_clicked()
 void Widget::on_maximized_clicked()
 {
     //emit sendText("123");
-    //this->showMaximized();
+    //this->showMaximized();rr
 }
 void Widget::on_minimized_clicked()
 {
     this->showMinimized();
 }
-void Widget::changeSearch(const QString &text){
-    qDebug() << text;
-    emit sendText(text);
+
+void Widget::titleDragStart()
+{
+    label = new QLabel();
+    label->setMouseTracking(true);
+    connect(label, SIGNAL(mousePressEvent), this, SLOT(labelMousePressEvent));
+    connect(label, SIGNAL(mouseMoveEvent), this, SLOT(labelMouseMoveEvent));
+
+    label->setMinimumHeight(50);
+    label->setMaximumHeight(50);
+    label->setStyleSheet("background-color:#000");
+    cmdLayout = new QVBoxLayout;
+    cmdLayout->setContentsMargins(25, 25, 25, 0);
+    cmdLayout->addWidget(label);
+    cmdLayout->addSpacerItem(new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding));
+    this->setLayout(cmdLayout);
 }

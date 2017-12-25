@@ -21,6 +21,9 @@
 #include <QPoint>
 #include <QMouseEvent>
 #include <QLibrary>
+#include <QVBoxLayout>
+#include <QSpacerItem>
+#include <QLabel>
 
 namespace Ui {
 class Widget;
@@ -34,13 +37,14 @@ public:
     explicit Widget(QWidget *parent = 0);
     ~Widget();
     void receiveText(const QString &text);
+    void receiveCmd(const QString &cmdText);
 
 protected:
     void resizeEvent(QResizeEvent *);
     void paintEvent(QPaintEvent *event);
-    virtual void mousePressEvent(QMouseEvent *event);
-    virtual void mouseMoveEvent(QMouseEvent *event);
-    virtual void mouseReleaseEvent(QMouseEvent *event);
+    virtual void labelMousePressEvent(QMouseEvent *event);
+    virtual void labelMouseMoveEvent(QMouseEvent *event);
+    virtual void labelMouseReleaseEvent(QMouseEvent *event);
 
 signals:
     void sendText(const QString &text);
@@ -49,14 +53,16 @@ private slots:
     void on_close_clicked();
     void on_maximized_clicked();
     void on_minimized_clicked();
-    void changeSearch(const QString &text);
 
 private:
     void initialization();
+    void titleDragStart();
     Ui::Widget *ui;
     QWebEngineView *view;
     bool mMoveing;
     QPoint mMovePosition;
+    QLabel *label;
+    QVBoxLayout *cmdLayout;
 
 };
 
